@@ -1,0 +1,14 @@
+<div class="outer-interface">
+    <div class="admin-interface">
+        <h2>Welcome Admin!</h2>
+        <h4>Articles:</h4>
+        <div *ngFor="let article of articles">
+        <h3>{{article.title}}</h3>
+        <h4>{{article.content}}</h4>
+        <h4>{{article.author}}</h4>
+    </div>
+        <div class="logout">
+            <button (click)="onLogout()" class="button-28">Logout</button>
+        </div>
+    </div>
+</div>
