@@ -1,6 +1,6 @@
-<h2>Akcie</h2>
-<div *ngFor="let article of articles">
-    <h3>{{article.title}}</h3>
+<h2>Články</h2>
+<div *ngFor="let article of articles" class="article">
+    <h2>{{article.title}}</h2>
     <h4>{{article.content}}</h4>
-    <h4>{{article.author}}</h4>
+    <p>{{article.author}}</p>
 </div>

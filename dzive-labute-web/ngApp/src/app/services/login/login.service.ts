@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,13 @@ export class LoginService {
   
       return this.http.get(url, { headers });
     }
-}
+    
+
+    private logoutSubject = new Subject<void>();
+    logoutObservable = this.logoutSubject.asObservable()
+
+    notifyLogout() {
+      this.logoutSubject.next()
+    }
+}    
 

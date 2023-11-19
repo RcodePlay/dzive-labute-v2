@@ -16,4 +16,14 @@ export class ArticlesService {
     //send the articles get request to he backend
     return this.http.get(url)
   }
+
+  createArticle(article: any): Observable<any> {
+    const url = `${this.apiUrl}/api/newarticle`
+    return this.http.post(url, article)
+  }
+
+  deleteArticle(id: string): Observable<any> {
+    const url = `${this.apiUrl}/articles/:articleId`
+    return this.http.delete(url)
+  }
 }

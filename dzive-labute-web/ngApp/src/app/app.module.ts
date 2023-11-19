@@ -7,7 +7,6 @@ import { LoginComponent } from './login/login.component';
 import { ArticlesComponent } from './articles/articles.component';
 import { AdminComponent } from './admin/admin.component';
 import { SubpageContentComponent } from './subpage-content/subpage-content.component';
-import { ArticleManagerComponent } from './article-manager/article-manager.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -16,8 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     ArticlesComponent,
     AdminComponent,
-    SubpageContentComponent,
-    ArticleManagerComponent
+    SubpageContentComponent
   ],
   imports: [
     BrowserModule,

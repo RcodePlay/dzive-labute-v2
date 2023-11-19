@@ -16,9 +16,9 @@
       <nav> 
         <ul>
           <li><a routerLink="/home"><button class="button-35">Home</button></a></li>
-          <li><a routerLink="/articles"><button class="button-35">Akcie</button></a></li>
+          <li><a routerLink="/articles"><button class="button-35">Články</button></a></li>
           <li><a routerLink="/contact"><button class="button-35">Kontakt</button></a></li>
-          <li><a routerLink="/login"><button class="button-35">Login</button></a></li>
+          <li><a [routerLink]="isLoggedIn ? '/admin' : '/login'"><button class="button-35">{{isLoggedIn ? 'Admin' : 'Login'}}</button></a></li>
         </ul>
       </nav>
     </div>

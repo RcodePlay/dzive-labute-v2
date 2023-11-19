@@ -1,12 +1,19 @@
 <div class="outer-interface">
     <div class="admin-interface">
         <h2>Welcome Admin!</h2>
-        <h4>Articles:</h4>
-        <div *ngFor="let article of articles">
-        <h3>{{article.title}}</h3>
-        <h4>{{article.content}}</h4>
-        <h4>{{article.author}}</h4>
-    </div>
+        <div class="newArticle">
+            <h4>Nový článok:</h4>
+            <label>Autor:</label><br>
+            <input [(ngModel)]="article.author" placeholder="Autor" class="input" type="text"><br>
+
+            <label>Názov:</label><br>
+            <input [(ngModel)]="article.title" placeholder="Názov" class="input" type="text"><br>
+
+            <label>Text:</label><br>
+            <textarea [(ngModel)]="article.content" class="textarea"></textarea><br>
+            <button (click)="createArticle()" class="button-28">Vytvoriť článok</button>
+
+        </div>
         <div class="logout">
             <button (click)="onLogout()" class="button-28">Logout</button>
         </div>

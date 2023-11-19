@@ -19,7 +19,7 @@ export class LoginComponent {
     onSubmit() {
       this.loginService.login(this.loginData).subscribe(
         (res) => {
-          console.log("Login successful:", res)
+          //console.log("Login successful:", res)
           const token = res.token
 
           this.loginService.setAuthToken(token)

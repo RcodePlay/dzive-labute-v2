@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
 import { ArticlesService } from '../services/articles/articles.service';
 import { Router } from '@angular/router';
-import { OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-admin',
@@ -14,15 +14,22 @@ export class AdminComponent implements OnInit {
 
   onLogout() {
     this.loginService.logout()
+    this.loginService.notifyLogout()
     this.router.navigate(['/login'])
   }
 
-  articles: any
-
   ngOnInit():void {
-    this.articleService.getArticles().subscribe((articles) => {
-      console.log('articles', articles)
-      this.articles = articles
+  }
+
+  article = {
+    title: '',
+    content: '',
+    author: ''
+  }
+
+  createArticle() {
+    this.articleService.createArticle(this.article).subscribe((response) => {
+      console.log(response)
     })
   }
 
