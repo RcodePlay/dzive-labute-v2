@@ -10,7 +10,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
+
+  username: string = ''
+
   constructor(private loginService: LoginService, private router: Router, private articleService: ArticlesService) {}
+
 
   onLogout() {
     this.loginService.logout()
@@ -19,7 +23,10 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit():void {
+    this.username = this.loginService.getUsername()
   }
+
+
 
   article = {
     title: '',

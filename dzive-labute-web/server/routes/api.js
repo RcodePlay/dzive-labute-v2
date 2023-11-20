@@ -76,15 +76,15 @@ router.post('/newarticle', async (req, res) => {
 })
 
 //route for removing articles by ObjectID
-router.delete('/articles/:articleId', async (req, res) => {
+router.delete('/articles/:id', async (req, res) => {
     try {
-        const articleId = req.params.articleId;
+        const { id } = req.params//.articleId;
     
-        if (!articleId) {
+        if (!id) {
           return res.status(400).json({ error: 'Article ID is required' });
         }
     
-        const deletedArticle = await Article.findByIdAndRemove(articleId);
+        const deletedArticle = await Article.findByIdAndDelete(id);
     
         if (!deletedArticle) {
           return res.status(404).json({ error: 'Article not found' });

@@ -15,16 +15,21 @@ export class ArticlesComponent implements OnInit{
 
   isloggedIn = false
 
-  //maintenance of the deleteArticle method
-  //errors with api paths
- /* deleteArticle(id: string) {
-    this.articlesService.deleteArticle(id).subscribe((response) => {
-      console.log(response);
-      // Handle response here
-      // You might want to remove the deleted article from your articles array
-    });
-  } */
 
+  deleteArticle(id: string) {
+    const confirmDelete = window.confirm('Are you sure you want to delete this article?')
+    if (confirmDelete) {
+      this.articlesService.deleteArticle(id).subscribe((response) => {
+        console.log(response)
+        this.articles = this.articles.filter((article: { _id: string; }) => article._id !== id);
+        alert("Article successfuly removed")
+      }, (error) => {
+          alert(error)
+      });
+    }
+  }
+
+  
   ngOnInit(): void {
     this.articlesService.getArticles().subscribe((articles) => {
       this.articles = articles

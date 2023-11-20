@@ -13,8 +13,13 @@ export class LoginService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
+  username: string = ''
+
   login(loginData: any): Observable<any> {
     const url = `${this.apiUrl}/api/login`
+
+    this.username = loginData.username
+
     // Send the login request to the backend API
     return this.http.post<any>(url, loginData);
 
@@ -61,6 +66,10 @@ export class LoginService {
 
     notifyLogout() {
       this.logoutSubject.next()
+    }
+
+    getUsername() {
+      return this.username
     }
 }    
 

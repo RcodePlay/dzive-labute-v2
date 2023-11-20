@@ -23,7 +23,6 @@ export class ArticlesService {
   }
 
   deleteArticle(id: string): Observable<any> {
-    const url = `${this.apiUrl}/articles/:articleId`
-    return this.http.delete(url)
+    return this.http.delete(`http://localhost:3000/api/articles/${id}`)
   }
 }
