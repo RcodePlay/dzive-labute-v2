@@ -4,7 +4,7 @@ const User = require('../models/user')
 const Article = require('../models/article')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
-const db = "mongodb+srv://onlineradoslav:lcVK47CpAmveodZg@dzive-labutedb.ac2pntx.mongodb.net/?retryWrites=true&w=majority"
+const db = ""
 
 //connecting database
 mongoose.connect(db, err => {
