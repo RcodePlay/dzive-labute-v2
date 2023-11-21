@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from './services/login/login.service';
 import { OnInit } from '@angular/core';
+import { CookiesService } from './services/cookies/cookies.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,9 @@ import { OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private cookieService: CookiesService) {}
+
+  showCookieMessage = false;
 
   title = 'ngApp';
   isLoggedIn = false
@@ -18,5 +21,11 @@ export class AppComponent implements OnInit {
     this.loginService.logoutObservable.subscribe(() => {
       this.isLoggedIn = false
     })
+    this.showCookieMessage = !this.cookieService.getCookieConsent();
+  }
+
+  acceptCookies() {
+    this.cookieService.setCookieConsent(true, 1);
+    this.showCookieMessage = false;
   }
 }

@@ -38,6 +38,11 @@
 <!-- Content -->
 <div class="content" role="main">
   
+  <div *ngIf="showCookieMessage" class="cookie-banner">
+    <p>We use cookies to improve your experience. By using our site, you agree to our use of cookies.</p>
+    <button (click)="acceptCookies()">I Understand</button>
+  </div>
+  
   <router-outlet></router-outlet>
 
   

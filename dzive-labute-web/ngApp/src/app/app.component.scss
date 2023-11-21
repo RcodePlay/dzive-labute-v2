@@ -151,3 +151,25 @@
       width: 100%;
     }
   }
+
+
+  .cookie-banner {
+    border-radius: 20%;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 300px;
+    background-color: #00c21d;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+  }
+  
+  .cookie-banner button {
+    margin-top: 10px;
+    padding: 10px 20px;
+  }

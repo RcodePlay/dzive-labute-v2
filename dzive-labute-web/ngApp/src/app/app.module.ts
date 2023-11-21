@@ -8,6 +8,7 @@ import { ArticlesComponent } from './articles/articles.component';
 import { AdminComponent } from './admin/admin.component';
 import { SubpageContentComponent } from './subpage-content/subpage-content.component';
 import { HttpClientModule } from '@angular/common/http';
+import { Error404Component } from './error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     ArticlesComponent,
     AdminComponent,
-    SubpageContentComponent
+    SubpageContentComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,
