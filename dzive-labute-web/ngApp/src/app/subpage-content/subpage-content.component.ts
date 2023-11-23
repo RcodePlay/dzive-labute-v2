@@ -18,4 +18,9 @@ export class SubpageContentComponent {
       this.isContact = segments[0]?.path === 'contact';
     });
   }
+
+
+  msgToMessenger() {
+    window.open('https://m.me/dzivelabutewebsupport', '_blank');
+  }
 }

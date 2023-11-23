@@ -28,4 +28,8 @@ export class AppComponent implements OnInit {
     this.cookieService.setCookieConsent(true, 1);
     this.showCookieMessage = false;
   }
+
+  msgSupport() {
+
+  }
 }
