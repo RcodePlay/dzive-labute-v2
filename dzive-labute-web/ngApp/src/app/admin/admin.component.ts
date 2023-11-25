@@ -40,4 +40,13 @@ export class AdminComponent implements OnInit {
     })
   }
 
+  isRoot = false
+
+  extraPermissions() {
+    if (this.username == 'ROOT_USERNAME') {
+      this.isRoot = true
+    } else {
+      this.isRoot = false
+    }
+  }
 }

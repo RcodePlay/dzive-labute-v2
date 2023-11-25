@@ -2,12 +2,12 @@
 <header>
 <div class="toolbar" role="banner">
   <a href="https://skauting.sk/">
-  <img
-    width="40"
-    alt="Sk skauting logo"
-    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-  />
-</a>
+    <img
+      width="40"
+      alt="Sk skauting logo"
+      src="../assets/sk-logo-mini.png"
+    >
+  </a>
 
   <span>4. Zbor Dzivé Labute</span>
     <div class="spacer"></div>
@@ -36,7 +36,7 @@
 
 
 <!-- Content -->
-<div class="content" role="main">
+<div [ngClass]="isDark ? 'dark-theme' : 'light-theme'" class="content" role="main">
   
   <div *ngIf="showCookieMessage" class="cookie-banner">
     <p>We use cookies to improve your experience. By using our site, you agree to our use of cookies.</p>
@@ -46,6 +46,8 @@
   <router-outlet></router-outlet>
 
   
+  <button (click)="toggleBackground()" class="button-28">Zmeniť motív</button>
+
   <!-- Footer -->
   <footer>
       Made with Angular and NodeJS&nbsp;<br>

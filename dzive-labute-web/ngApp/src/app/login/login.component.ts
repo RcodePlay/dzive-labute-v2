@@ -19,7 +19,6 @@ export class LoginComponent {
     onSubmit() {
       this.loginService.login(this.loginData).subscribe(
         (res) => {
-          //console.log("Login successful:", res)
           const token = res.token
 
           this.loginService.setAuthToken(token)
@@ -31,6 +30,7 @@ export class LoginComponent {
         },
         (error) => {
           console.error("Login failed:", error)
+          alert("Nesprávne meno alebo heslo")
         }
       )
     }
