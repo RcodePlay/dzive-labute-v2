@@ -1,8 +1,19 @@
 <h2>Články</h2>
 <div *ngFor="let article of articles" class="article">
     <h2>{{article.title}}</h2>
-    <h4>{{article.content}}</h4>
-    <p>{{article.author}}</p>
-    <div class="spacer"></div>
-    <button *ngIf="isloggedIn" (click)="deleteArticle(article._id)" class="button-35">Delete</button>
+    <h3>{{article.content}}</h3>
+    <p>{{article.author}}</p><br>
+    <button *ngIf="isloggedIn" (click)="deleteArticle(article._id)" class="button-35">Delete</button><br>
+
+
+<!--
+        <br><button *ngIf="isloggedIn" (click)="editArticle(article._id)" class="button-35">Edit</button>
+    <form *ngIf="editing && selectedArticle._id === article._id" (ngSubmit)="updateArticle()">
+        <input [(ngModel)]="selectedArticle.title" name="title">
+        <textarea [(ngModel)]="selectedArticle.content" name="content"></textarea>
+        <button type="submit" class="button-36">Submit</button>
+    </form> 
+-->
+
+
 </div>

@@ -4,13 +4,17 @@
         <h3>Login</h3>
         <div class="inner-form">
         <form (ngSubmit)="onSubmit()">
+
             <div class="username">
-                <label for="">Username</label><br>
-                <input [(ngModel)]="loginData.username" name="username" type="text"><br>
+                <label>Username <br>
+                <input [(ngModel)]="loginData.username" name="username" type="text" autocomplete="username">
+                <br></label><br>
             </div>
+
             <div class="password">
-                <label for="">Password</label><br>
-                <input [(ngModel)]="loginData.password" name="password" type="password"><br>
+                <label>Password<br>
+                <input [(ngModel)]="loginData.password" name="password" type="password" autocomplete="current-password"><br>
+                </label><br>
             </div>
                 <button type="submit" class="button-28">Login</button>
         </form>

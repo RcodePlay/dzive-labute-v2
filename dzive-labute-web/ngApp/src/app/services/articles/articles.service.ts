@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class ArticlesService {
 
   private apiUrl = "http://localhost:3000"
@@ -25,4 +27,19 @@ export class ArticlesService {
   deleteArticle(id: string): Observable<any> {
     return this.http.delete(`http://localhost:3000/api/articles/${id}`)
   }
+
+  getArticle(id: string): Observable<Article> {
+    return this.http.get<Article>(`${this.apiUrl}/articles/${id}`)
+  }
+
+  updateArticle(id: string, article: Article): Observable<Article> {
+    return this.http.put<Article>(`${this.apiUrl}/edit/${id}`, article)
+  }
+}
+
+export interface Article {
+  _id: string
+  title: string
+  content: string
+  author: string
 }

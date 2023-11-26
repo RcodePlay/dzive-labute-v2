@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
 import { ArticlesService } from '../services/articles/articles.service';
 import { LoginService } from '../services/login/login.service';
+import { Article } from '../services/articles/articles.service';
 
 @Component({
   selector: 'app-articles',
@@ -11,10 +12,9 @@ import { LoginService } from '../services/login/login.service';
 export class ArticlesComponent implements OnInit{
   constructor(private articlesService: ArticlesService, private loginService: LoginService) {}
 
-  articles: any
-
   isloggedIn = false
 
+  articles: any
 
   deleteArticle(id: string) {
     const confirmDelete = window.confirm('Are you sure you want to delete this article?')

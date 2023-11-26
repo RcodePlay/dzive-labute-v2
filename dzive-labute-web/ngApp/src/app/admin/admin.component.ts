@@ -37,12 +37,13 @@ export class AdminComponent implements OnInit {
   createArticle() {
     this.articleService.createArticle(this.article).subscribe((response) => {
       console.log(response)
+      alert("Článok vytvorený!")
     })
   }
 
   isRoot = false
 
-  extraPermissions() {
+  checkRootPermissions() {
     if (this.username == 'ROOT_USERNAME') {
       this.isRoot = true
     } else {
