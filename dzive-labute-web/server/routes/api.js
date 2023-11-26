@@ -3,6 +3,7 @@ const router = express.Router()
 const User = require('../models/user')
 const Article = require('../models/article')
 const mongoose = require('mongoose')
+mongoose.set('strictQuery', false)
 const jwt = require('jsonwebtoken')
 const db = ""
 

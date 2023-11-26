@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,12 +28,21 @@ export class ArticlesService {
     return this.http.delete(`http://localhost:3000/api/articles/${id}`)
   }
 
-  getArticle(id: string): Observable<Article> {
-    return this.http.get<Article>(`${this.apiUrl}/articles/${id}`)
+
+  selectedArticle: Article = {
+    _id: '',
+    title: '',
+    content: '',
+    author: ''
   }
 
+  getArticle(id: string): Observable<Article> {
+     return this.http.get<Article>(`${this.apiUrl}/api/articles/${id}`)
+  }
+
+
   updateArticle(id: string, article: Article): Observable<Article> {
-    return this.http.put<Article>(`${this.apiUrl}/edit/${id}`, article)
+    return this.http.put<Article>(`${this.apiUrl}/api/edit/${id}`, article)
   }
 }
 

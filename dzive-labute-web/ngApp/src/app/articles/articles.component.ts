@@ -14,7 +14,15 @@ export class ArticlesComponent implements OnInit{
 
   isloggedIn = false
 
+  selectedArticle: Article = {
+    _id: '',
+    title: '',
+    content: '',
+    author: ''
+  }
+
   articles: any
+  editing = false
 
   deleteArticle(id: string) {
     const confirmDelete = window.confirm('Are you sure you want to delete this article?')
@@ -40,5 +48,45 @@ export class ArticlesComponent implements OnInit{
     } else {
       this.isloggedIn = false
     }
+  }
+
+  getArticle(id: string) {
+    this.articlesService.getArticle(id).subscribe({
+      next: (article: Article) => {
+        this.selectedArticle._id = article._id
+        this.selectedArticle.title = article.title
+        this.selectedArticle.content = article.content
+      }, 
+      error: (error) => {
+        console.error(error)
+      }
+    })
+  }
+
+  editArticle(id: string) {
+    this.selectedArticle._id = id
+    if (!this.editing) {
+      this.editing = true
+    } else {
+      this.editing = false
+    }
+  }
+
+  updateArticle() {
+    if (!this.editing) {
+      console.error('No article is currently being edited.');
+      return;
+    }
+  
+    this.articlesService.updateArticle(this.selectedArticle._id, this.selectedArticle).subscribe(
+      (updatedArticle: Article) => {
+  
+        const index = this.articles.findIndex((article: Article) => article._id === updatedArticle._id);
+        this.articles[index] = updatedArticle;
+        this.editing = false;
+      }, (error) => {
+        console.error(error)
+      }
+    )
   }
 }
