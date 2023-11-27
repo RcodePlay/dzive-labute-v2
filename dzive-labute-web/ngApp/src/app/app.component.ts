@@ -42,6 +42,7 @@ export class AppComponent implements OnInit {
   toggleBackground() {
     this.isDark = !this.isDark
     this.cookieService.set('isDark', String(this.isDark))
+    window.location.reload()
     this.updateBackground()
   }
 
@@ -59,6 +60,5 @@ export class AppComponent implements OnInit {
 
     const color = this.isDark ? '#1b1a19' : '#FFFFFF'
     this.renderer.setStyle(document.body, 'background-color', color)
-    this.cdr.detectChanges()
   }
 }
