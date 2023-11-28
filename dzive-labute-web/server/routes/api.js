@@ -7,8 +7,11 @@ mongoose.set('strictQuery', false)
 const jwt = require('jsonwebtoken')
 const db = ""
 
+
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
+
+
 
 //connecting database
 mongoose.connect(db, err => {
