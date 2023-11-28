@@ -5,7 +5,10 @@ const Article = require('../models/article')
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 const jwt = require('jsonwebtoken')
-const db = "mongodb+srv://onlineradoslav:lcVK47CpAmveodZg@dzive-labutedb.ac2pntx.mongodb.net/?retryWrites=true&w=majority"
+const db = ""
+
+const nodemailer = require('nodemailer')
+const crypto = require('crypto')
 
 //connecting database
 mongoose.connect(db, err => {
@@ -16,12 +19,22 @@ mongoose.connect(db, err => {
     }
 })
 
-const secretKey = '>em)Pyoz%95C+L-hZe^-'
+let secretKey = crypto.randomBytes(64).toString('hex')
 
 //basic test if everything is okay
 router.get('/', (req, res) => {
     res.send('From API route')
 })
+
+
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'your@gmail.com',
+        pass: 'password'
+    }
+});
+
 
 //route for logging into the website
 router.post('/login', (req, res) => {
@@ -42,7 +55,34 @@ router.post('/login', (req, res) => {
             
         
     })
+    const loginTime = new Date();
+    const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+    let mailOptions = {
+        from: 'your@gmail.com',
+        to: 'mine@gmail.com',
+        subject: 'User Login at Dzive Labute',
+        text: `User "${userData.username}" logged in at ${loginTime} from IP address ${ipAddress}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    })
+
 })
+
+
+router.post('/glogout', (req, res) => {
+    // Invalidate all tokens by generating a new secret key
+    secretKey = crypto.randomBytes(64).toString('hex');
+  
+    // Send a response to the frontend
+    res.status(200).send({ message: 'All users have been logged out.' });
+  });
 
 //route for fetching all articles
 router.get('/articles', async (req, res) => {

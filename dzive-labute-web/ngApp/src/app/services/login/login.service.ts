@@ -52,6 +52,13 @@ export class LoginService {
     this.cookieService.delete('authToken')
   }
 
+  globalLogout(): void {
+    const url = `${this.apiUrl}/api/glogout`
+    this.http.post(url, {}).subscribe(response => {
+      alert("Global Logout activated")
+    })
+  }
+
     // Modified method to include headers in the request
     getProtectedData(): Observable<any> {
       const url = `${this.apiUrl}/api/protected-data`;

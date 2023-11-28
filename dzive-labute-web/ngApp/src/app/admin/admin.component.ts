@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
 import { ArticlesService } from '../services/articles/articles.service';
+import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 
@@ -9,11 +10,12 @@ import { Router } from '@angular/router';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent  implements OnInit {
 
   username: string = ''
 
-  constructor(private loginService: LoginService, private router: Router, private articleService: ArticlesService) {}
+  constructor(private loginService: LoginService, private router: Router,
+     private articleService: ArticlesService, private cookieService: CookieService) {}
 
 
   onLogout() {
@@ -23,7 +25,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit():void {
-    this.username = this.loginService.getUsername()
+    this.checkRootPermissions()
   }
 
 
@@ -42,12 +44,20 @@ export class AdminComponent implements OnInit {
   }
 
   isRoot = false
+  pin: string = ''
+  rootPin: string = 'root-pin'
 
   checkRootPermissions() {
-    if (this.username == 'ROOT_USERNAME') {
-      this.isRoot = true
+    if (this.pin == this.rootPin) {
+      return this.isRoot = true
     } else {
-      this.isRoot = false
+      return this.isRoot = false
+    }
+  }
+
+  globalLogout() {
+    if (this.isRoot == true) {
+      this.loginService.globalLogout()
     }
   }
 }
