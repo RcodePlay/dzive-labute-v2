@@ -16,7 +16,7 @@ export class LoginService {
   username: string = ''
 
   login(loginData: any): Observable<any> {
-    const url = `${this.apiUrl}/api/login`
+    const url = `${this.apiUrl}/auth/login`
 
     this.username = loginData.username
 
@@ -32,7 +32,8 @@ export class LoginService {
   }
 
   getAuthToken(): string | null {
-    return this.cookieService.get('authToken');
+    console.log(this.cookieService.get('authToken'))
+    return this.cookieService.get('authToken') 
   }
 
   // Modified method to include JWT in the Authorization header
@@ -53,9 +54,21 @@ export class LoginService {
   }
 
   globalLogout(): void {
-    const url = `${this.apiUrl}/api/glogout`
+    this.checkAuth()
+    const url = `${this.apiUrl}/auth/glogout`
     this.http.post(url, {}).subscribe(response => {
-      alert("Global Logout activated")
+      console.log(response)
+    })
+  }
+
+  checkAuth(): void {
+    const url = `${this.apiUrl}/auth/check`
+    const headers = {'Authorization': 'Bearer ' + this.getAuthToken()}
+    this.http.get(url, { headers }).subscribe(
+      response => {
+        console.log(response)
+    }, (error) => {
+      console.error(error)
     })
   }
 
