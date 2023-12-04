@@ -4,9 +4,9 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 const nodemailer = require('nodemailer')
-const crypto = require('crypto')
 
 require('dotenv').config()
+
 
 
 let transporter = nodemailer.createTransport({
@@ -16,8 +16,6 @@ let transporter = nodemailer.createTransport({
         pass: process.env.MAIL_PASS
     }
 });
-
-let secretKey = crypto.randomBytes(32).toString('hex')
 
 
 //route for logging into the website
@@ -33,7 +31,8 @@ router.post('/login', (req, res) => {
             } else if ( user.password !== userData.password ) {
                     res.status(401).send('Invalid password')
                 } else {
-                    const token = jwt.sign({ username: user.username, userId: user._id }, secretKey, { expiresIn: '1h' });
+                    const token = jwt.sign({ username: user.username, userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+                    req.session.jwt = token
                     res.status(200).json({ token })
                 }
             
@@ -56,24 +55,25 @@ router.post('/login', (req, res) => {
             console.log('Email sent: ' + info.response);
         }
     })
-    console.log(secretKey)
 })
 
 
-router.post('/glogout', (req, res) => {
-    // Invalidate all tokens by generating a new secret key
-    secretKey = crypto.randomBytes(32).toString('hex');
-  
-    // Send a response to the frontend
-    res.status(200).send({ message: 'All users have been logged out.' });
-  });
+router.get('/glogout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+          return res.status(500).send({ message: 'Failed to log out.' });
+        }
+    
+        // Send a response to the client
+        res.status(200).send({ message: 'All users have been logged out.' });
+  })
+})
 
 
 
 function verifyToken(req, res, next) {
     // Get the token from the request headers
     const token = req.headers['authorization'];
-    console.log(secretKey)
     console.log(req.headers)
   
     // Check if token exists
@@ -82,7 +82,7 @@ function verifyToken(req, res, next) {
     }
   
     // Verify the token
-    jwt.verify(token, secretKey, (err, decoded) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         console.log(err)
         return res.status(500).send({ message: 'Failed to authenticate token.' });

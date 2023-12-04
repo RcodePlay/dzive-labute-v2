@@ -41,7 +41,7 @@ export class LoginService {
     const token = this.getAuthToken();
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
+      'Authorization': ` ${token}`,
     });
   }
 
@@ -56,14 +56,14 @@ export class LoginService {
   globalLogout(): void {
     this.checkAuth()
     const url = `${this.apiUrl}/auth/glogout`
-    this.http.post(url, {}).subscribe(response => {
+    this.http.get(url, { /* headers */ }).subscribe(response => {
       console.log(response)
     })
   }
 
   checkAuth(): void {
     const url = `${this.apiUrl}/auth/check`
-    const headers = {'Authorization': 'Bearer ' + this.getAuthToken()}
+    const headers = this.getHeaders()
     this.http.get(url, { headers }).subscribe(
       response => {
         console.log(response)
