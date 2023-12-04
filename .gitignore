@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # Env variables
-server/.env
+dzive-labute-web/server/.env
