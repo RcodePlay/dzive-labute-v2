@@ -9,14 +9,14 @@ import { Subject } from 'rxjs';
 })
 export class LoginService {
 
-  private apiUrl = "http://localhost:3000"
+  private apiUrl = "http://localhost:3000/auth"
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   username: string = ''
 
   login(loginData: any): Observable<any> {
-    const url = `${this.apiUrl}/auth/login`
+    const url = `${this.apiUrl}/login`
 
     this.username = loginData.username
 
@@ -32,7 +32,6 @@ export class LoginService {
   }
 
   getAuthToken(): string | null {
-    console.log(this.cookieService.get('authToken'))
     return this.cookieService.get('authToken') 
   }
 
@@ -46,23 +45,40 @@ export class LoginService {
   }
 
   isAuthenticatedUser(): boolean {
-    return this.cookieService.check('authToken');
+    const url = `${this.apiUrl}/check`
+    const headers = this.getHeaders()
+    this.http.get(url, { headers }).subscribe(
+      response => {
+        console.log(response)
+      }, (error) => {
+        console.error(error)
+      })
+      return this.cookieService.check('authToken')
   }
 
   logout(): void {
-    this.cookieService.delete('authToken')
+    const url = `${this.apiUrl}/logout`
+    const headers = this.getHeaders()
+    this.http.get(url, { headers }).subscribe(
+      res => {
+        console.log(res)
+      }, (error) => {
+        console.log(error)
+      }
+    )
   }
 
   globalLogout(): void {
     this.checkAuth()
-    const url = `${this.apiUrl}/auth/glogout`
-    this.http.get(url, { /* headers */ }).subscribe(response => {
+    const url = `${this.apiUrl}/glogout`
+    const headers = this.getHeaders()
+    this.http.get(url, { headers }).subscribe(response => {
       console.log(response)
     })
   }
 
   checkAuth(): void {
-    const url = `${this.apiUrl}/auth/check`
+    const url = `${this.apiUrl}/check`
     const headers = this.getHeaders()
     this.http.get(url, { headers }).subscribe(
       response => {
@@ -74,7 +90,7 @@ export class LoginService {
 
     // Modified method to include headers in the request
     getProtectedData(): Observable<any> {
-      const url = `${this.apiUrl}/api/protected-data`;
+      const url = `${this.apiUrl}/protected-data`;
       const headers = this.getHeaders();
   
       return this.http.get(url, { headers });

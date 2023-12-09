@@ -14,14 +14,6 @@ const auth = require('./routes/auth')
 app.use(cors({origin: 'http://localhost:4200'}))
 app.use(bodyParser.json())
 
-app.use(session({
-    secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({ 
-      mongoUrl: process.env.DB_CONNECT 
-    })
-  }));
 
 app.use((req, res, next) => {
     res.setHeader('Content-Security-Policy', "frame-ancestors 'none'")

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+const Session = require('../models/session')
 const jwt = require('jsonwebtoken')
 
 const nodemailer = require('nodemailer')
@@ -18,6 +19,10 @@ let transporter = nodemailer.createTransport({
 });
 
 
+router.get('/', (req, res) => {
+    res.send('Hello from Auth')
+})
+
 //route for logging into the website
 router.post('/login', (req, res) => {
     let userData = req.body
@@ -32,7 +37,21 @@ router.post('/login', (req, res) => {
                     res.status(401).send('Invalid password')
                 } else {
                     const token = jwt.sign({ username: user.username, userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
-                    req.session.jwt = token
+                    
+                    let tokenObj = {
+                        user: userData.username,
+                        token: token
+                    }
+
+                    let session = new Session(tokenObj)
+                    session.save((error, sessionSaved) => {
+                        if (error) {
+                            console.log(error)
+                        } else {
+                            console.log("success")
+                        }
+                    })
+
                     res.status(200).json({ token })
                 }
             
@@ -59,14 +78,14 @@ router.post('/login', (req, res) => {
 
 
 router.get('/glogout', (req, res) => {
-    req.session.destroy(err => {
+    Session.deleteMany({}, (err, res) => {
         if (err) {
-          return res.status(500).send({ message: 'Failed to log out.' });
+            console.log(err)
+        } else {
+            console.log(res)
         }
-    
-        // Send a response to the client
-        res.status(200).send({ message: 'All users have been logged out.' });
-  })
+    })
+    res.status(200).json({ message: 'Logged out' })
 })
 
 
@@ -81,8 +100,16 @@ function verifyToken(req, res, next) {
       return res.status(403).send({ message: 'No token provided.' });
     }
   
+    Session.findOne({token: token}, (err, session) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("Checked user session")
+        }
+    })
+
     // Verify the token
-    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    /* jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         console.log(err)
         return res.status(500).send({ message: 'Failed to authenticate token.' });
@@ -91,11 +118,24 @@ function verifyToken(req, res, next) {
       // If everything is good, save the decoded token to the request for use in other routes
       req.userId = decoded.id;
       next();
-    });
+    }); */
 }
 
 router.get('/check', verifyToken, (req, res) => {
     res.status(200).send({ message: 'Checking Authentication' })
+})
+
+router.get('/logout', (req, res) => {
+    const token = req.headers['authorization']
+
+    Session.deleteOne({token}, (error, res) => {
+        if (error) {
+            console.log(error)
+        } if (res) {
+            console.log(res)
+        }
+    })
+    res.status(200).json({ message: 'Logged out'})
 })
 
 module.exports = router

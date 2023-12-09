@@ -26,6 +26,7 @@ export class AdminComponent  implements OnInit {
 
   ngOnInit():void {
     this.checkRootPermissions()
+    this.loginService.isAuthenticatedUser()
   }
 
 
@@ -37,10 +38,14 @@ export class AdminComponent  implements OnInit {
   }
 
   createArticle() {
+    if (this.loginService.isAuthenticatedUser()) {
+
+    
     this.articleService.createArticle(this.article).subscribe((response) => {
       console.log(response)
       alert("Článok vytvorený!")
     })
+  }
   }
 
   isRoot = false
@@ -48,11 +53,14 @@ export class AdminComponent  implements OnInit {
   rootPin: string = 'root-pin'
 
   checkRootPermissions() {
+    if (this.loginService.isAuthenticatedUser()) {
     if (this.pin == this.rootPin) {
       return this.isRoot = true
     } else {
       return this.isRoot = false
     }
+  }
+  return this.isRoot
   }
 
   globalLogout() {

@@ -8,7 +8,6 @@
 
     <br><button *ngIf="isloggedIn" (click)="editArticle(article._id)" class="button-35">Edit</button>
     <form *ngIf="editing" (ngSubmit)="updateArticle()"><br>
-
         <label>Názov: 
             <input [(ngModel)]="selectedArticle.title" name="title" placeholder="Názov" class="input">
         </label><br>
@@ -19,5 +18,5 @@
 
         <button type="submit" class="button-36">Submit</button>
     </form> 
-
+<!--(click)="this.editArticle()" -->
 </div>
