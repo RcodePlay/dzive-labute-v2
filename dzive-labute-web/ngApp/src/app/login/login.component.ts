@@ -22,6 +22,7 @@ export class LoginComponent {
           const token = res.token
 
           this.loginService.setAuthToken(token)
+          this.loginService.setAuthState()
           this.router.navigate(['/admin']).then(success => {
             if (!success) {
               console.error('Navigation failed')

@@ -35,6 +35,29 @@ export class LoginService {
     return this.cookieService.get('authToken') 
   }
 
+  setAuthState(): void {
+    let authState: string = ''
+    if (this.authToken) {
+      authState = 'true'
+      this.cookieService.set('authState', authState)
+    } else {
+      authState = 'false'
+      this.cookieService.set('authState', authState)
+    }
+  }
+
+  getAuthState(): boolean {
+    const stateCheck = this.cookieService.check('authState')
+    let state: boolean
+    if (stateCheck == true) {
+      state = true
+      return state
+    } else {
+      state = false
+      return state
+    }
+  }
+
   // Modified method to include JWT in the Authorization header
   private getHeaders(): HttpHeaders {
     const token = this.getAuthToken();
@@ -47,13 +70,14 @@ export class LoginService {
   isAuthenticatedUser(): boolean {
     const url = `${this.apiUrl}/check`
     const headers = this.getHeaders()
+    this.setAuthState()
     this.http.get(url, { headers }).subscribe(
       response => {
         console.log(response)
       }, (error) => {
         console.error(error)
       })
-      return this.cookieService.check('authToken')
+      return this.cookieService.check('authState')
   }
 
   logout(): void {
@@ -75,6 +99,7 @@ export class LoginService {
     this.http.get(url, { headers }).subscribe(response => {
       console.log(response)
     })
+    this.setAuthState()
   }
 
   checkAuth(): void {
