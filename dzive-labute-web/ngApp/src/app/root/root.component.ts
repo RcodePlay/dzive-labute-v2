@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginService } from '../services/login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -6,10 +7,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./root.component.scss']
 })
 export class RootComponent {
-  user: string = ''
-  token: string = ''
+
+  loginData = {
+    user: "",
+    token: ""
+  }
+
+  constructor(private loginService: LoginService) {}
+
+  private apiUrl = "http://localhost:3000/root"
 
   tokenLogin(): void {
-
+    this.loginService.tokenLogin(this.loginData)
   }
 }

@@ -24,9 +24,11 @@ router.post('/tlogin', (req, res) => {
                 } else if (!token) {
                     res.status(401).json({ message: 'Invalid Token'})
                 } else {
-                    
+                    res.status(200).json({ message: 'Token login successful' })
                 }
             })
         }
     })
 })
+
+module.exports = router

@@ -35,9 +35,17 @@ export class LoginService {
     return this.cookieService.get('authToken') 
   }
 
+  getAuthTokenBool(): boolean {
+    if (this.getAuthToken() == this.authToken) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   setAuthState(): void {
     let authState: string = ''
-    if (this.authToken) {
+    if (this.getAuthTokenBool() == true) {
       authState = 'true'
       this.cookieService.set('authState', authState)
     } else {
@@ -70,14 +78,14 @@ export class LoginService {
   isAuthenticatedUser(): boolean {
     const url = `${this.apiUrl}/check`
     const headers = this.getHeaders()
-    this.setAuthState()
+    this.getAuthState()
     this.http.get(url, { headers }).subscribe(
       response => {
         console.log(response)
       }, (error) => {
         console.error(error)
       })
-      return this.cookieService.check('authState')
+      return this.cookieService.check('authToken')
   }
 
   logout(): void {
@@ -131,6 +139,12 @@ export class LoginService {
 
     getUsername() {
       return this.username
+    }
+
+    tokenLogin(loginData: any): Observable<any> {
+      const url = "http://localhost:3000/root/tlogin"
+
+      return this.http.post(url, loginData)
     }
 }    
 

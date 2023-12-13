@@ -53,11 +53,14 @@ export class AdminComponent  implements OnInit {
   rootPin: string = 'root-pin'
 
   checkRootPermissions() {
-    if (this.pin == this.rootPin) {
+    if (this.loginService.isAuthenticatedUser()) {
+      if (this.pin == this.rootPin) {
       return this.isRoot = true
     } else {
       return this.isRoot = false
     }
+    }
+    return this.isRoot
   }
 
   globalLogout() {
