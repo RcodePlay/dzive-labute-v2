@@ -17,14 +17,4 @@
             <button (click)="createArticle()" class="button-28">Vytvoriť článok</button><br>
 
         </div><br>
-            <form (submit)="checkRootPermissions()">
-                <label>Admin user PIN: <br>
-                <input [(ngModel)]="pin" class="input" type="text" placeholder="Root PIN" name="PIN"><br>
-                </label><br>
-            </form><br>
-                
-            <div class="logout">
-                <button (click)="onLogout()" class="button-28">Logout</button><br>
-                <button *ngIf="isRoot" (click)="globalLogout()" class="button-28">Global Logout</button>
-            </div>
         

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
 import { ArticlesService } from '../services/articles/articles.service';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 
 
@@ -10,12 +9,12 @@ import { Router } from '@angular/router';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent  implements OnInit {
+export class AdminComponent implements OnInit {
 
   username: string = ''
 
   constructor(private loginService: LoginService, private router: Router,
-     private articleService: ArticlesService, private cookieService: CookieService) {}
+     private articleService: ArticlesService) {}
 
 
   onLogout() {
@@ -25,8 +24,7 @@ export class AdminComponent  implements OnInit {
   }
 
   ngOnInit():void {
-    this.checkRootPermissions()
-    this.loginService.isAuthenticatedUser()
+    this.loginService.checkAuth()
   }
 
 
@@ -46,26 +44,5 @@ export class AdminComponent  implements OnInit {
       alert("Článok vytvorený!")
     })
   }
-  }
-
-  isRoot = false
-  pin: string = ''
-  rootPin: string = 'root-pin'
-
-  checkRootPermissions() {
-    if (this.loginService.isAuthenticatedUser()) {
-      if (this.pin == this.rootPin) {
-      return this.isRoot = true
-    } else {
-      return this.isRoot = false
-    }
-    }
-    return this.isRoot
-  }
-
-  globalLogout() {
-    if (this.isRoot == true) {
-      this.loginService.globalLogout()
-    }
   }
 }

@@ -107,22 +107,11 @@ function verifyToken(req, res, next) {
             console.log("Checked user session")
         }
     })
-
-    // Verify the token
-    /* jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-      if (err) {
-        console.log(err)
-        return res.status(500).send({ message: 'Failed to authenticate token.' });
-      }
-  
-      // If everything is good, save the decoded token to the request for use in other routes
-      req.userId = decoded.id;
-      next();
-    }); */
 }
 
 router.get('/check', verifyToken, (req, res) => {
-    res.status(200).send({ message: 'Checking Authentication' })
+    const headers = req.headers['']
+    res.status(200).send({ message: 'Checking Authentication', headers: headers })
 })
 
 router.get('/logout', (req, res) => {
@@ -135,7 +124,7 @@ router.get('/logout', (req, res) => {
             console.log(res)
         }
     })
-    res.status(200).json({ message: 'Logged out'})
+    res.status(200).json({ message: 'Logged out' })
 })
 
 module.exports = router
