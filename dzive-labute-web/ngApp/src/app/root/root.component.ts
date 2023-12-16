@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,11 +14,10 @@ export class RootComponent {
     token: ""
   }
 
-  constructor(private loginService: LoginService) {}
-
-  private apiUrl = "http://localhost:3000/root"
+  constructor(private loginService: LoginService, private router: Router) {}
 
   tokenLogin(): void {
     this.loginService.tokenLogin(this.loginData)
+    this.router.navigate(['/admin'])
   }
 }
