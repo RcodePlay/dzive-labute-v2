@@ -140,11 +140,5 @@ export class LoginService {
     getUsername() {
       return this.username
     }
-
-    tokenLogin(loginData: any): Observable<any> {
-      const url = "http://localhost:3000/root/tlogin"
-
-      return this.http.post(url, loginData)
-    }
 }    
 

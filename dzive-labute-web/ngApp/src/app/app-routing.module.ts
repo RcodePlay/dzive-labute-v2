@@ -5,7 +5,6 @@ import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { SubpageContentComponent } from './subpage-content/subpage-content.component';
 import { Error404Component } from './error404/error404.component';
-import { RootComponent } from './root/root.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
@@ -15,7 +14,6 @@ const routes: Routes = [
   {path: 'articles', component: ArticlesComponent},
   {path: 'login', component: LoginComponent},
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard()]},
-  {path: 'tokensploit', component: RootComponent},
   {path: '404', component: Error404Component},
   {path: '**', redirectTo: '/404'},
 ];

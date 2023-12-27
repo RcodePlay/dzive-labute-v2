@@ -9,7 +9,6 @@ import { AdminComponent } from './admin/admin.component';
 import { SubpageContentComponent } from './subpage-content/subpage-content.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Error404Component } from './error404/error404.component';
-import { RootComponent } from './root/root.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +17,7 @@ import { RootComponent } from './root/root.component';
     ArticlesComponent,
     AdminComponent,
     SubpageContentComponent,
-    Error404Component,
-    RootComponent
+    Error404Component
   ],
   imports: [
     BrowserModule,
