@@ -16,4 +16,11 @@ export class CookiesService {
     this.cookieService.set('cookieConsent', value.toString(), days);
   }
 
+  setLoginable(value: boolean) {
+    this.cookieService.set('loginable', value.toString(), 1)
+  }
+
+  isLoginable(): boolean {
+    return this.cookieService.get('loginable') === 'false'
+  }
 }

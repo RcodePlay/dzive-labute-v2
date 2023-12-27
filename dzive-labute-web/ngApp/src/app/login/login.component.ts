@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
 import { Router } from '@angular/router'
+import { CookiesService } from '../services/cookies/cookies.service';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,19 @@ export class LoginComponent {
       password: ""
     };
 
-  constructor(private loginService: LoginService, private router: Router) {}
-  
+  constructor(private loginService: LoginService, private router: Router, private cookiesService: CookiesService) {}
+    
+    loginAttemptCount = 0
+
+
+    login() {
+      if (this.cookiesService.isLoginable()) {
+        alert("Stop it, get some help")
+      } else {
+        this.onSubmit()
+      }
+    }
+
     onSubmit() {
       this.loginService.login(this.loginData).subscribe(
         (res) => {
@@ -32,6 +44,15 @@ export class LoginComponent {
         (error) => {
           console.error("Login failed:", error)
           alert("Nesprávne meno alebo heslo")
+          this.loginAttemptCount++
+
+          if (this.loginAttemptCount > 5 ) {
+            this.cookiesService.setLoginable(false)
+          } else {
+            this.cookiesService.setLoginable(true)
+          }
+
+          console.log(this.loginAttemptCount)
         }
       )
     }
