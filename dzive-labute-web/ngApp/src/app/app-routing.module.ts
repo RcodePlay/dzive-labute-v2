@@ -6,6 +6,7 @@ import { AdminComponent } from './admin/admin.component';
 import { SubpageContentComponent } from './subpage-content/subpage-content.component';
 import { Error404Component } from './error404/error404.component';
 import { AuthGuard } from './auth.guard';
+import { TloginComponent } from './tlogin/tlogin.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'articles', component: ArticlesComponent},
   {path: 'login', component: LoginComponent},
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard()]},
+  {path: 'token', component: TloginComponent},
   {path: '404', component: Error404Component},
   {path: '**', redirectTo: '/404'},
 ];

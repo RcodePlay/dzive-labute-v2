@@ -9,6 +9,7 @@ import { AdminComponent } from './admin/admin.component';
 import { SubpageContentComponent } from './subpage-content/subpage-content.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Error404Component } from './error404/error404.component';
+import { TloginComponent } from './tlogin/tlogin.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { Error404Component } from './error404/error404.component';
     ArticlesComponent,
     AdminComponent,
     SubpageContentComponent,
-    Error404Component
+    Error404Component,
+    TloginComponent
   ],
   imports: [
     BrowserModule,

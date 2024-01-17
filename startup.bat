@@ -5,3 +5,4 @@ cd..
 cd ngapp
 start cmd /k ng serve
 start chrome localhost:4200
+cls

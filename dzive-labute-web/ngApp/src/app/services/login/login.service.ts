@@ -25,6 +25,12 @@ export class LoginService {
 
   }
 
+  tokenLogin(loginData: any): Observable<any> {
+    const url = `${this.apiUrl}/tokenlogin`
+
+    return this.http.post<any>(url, loginData)
+  }
+
   private authToken: string | null = null
   setAuthToken(token: string): void {
     this.cookieService.set('authToken', token)

@@ -3,16 +3,16 @@ import { LoginService } from '../services/login/login.service';
 import { Router } from '@angular/router'
 import { CookiesService } from '../services/cookies/cookies.service';
 
-@Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
-})
 
-export class LoginComponent {
+@Component({
+  selector: 'app-tlogin',
+  templateUrl: './tlogin.component.html',
+  styleUrls: ['./tlogin.component.scss']
+})
+export class TloginComponent {
     loginData = {
-      username: "",
-      password: ""
+      user: "",
+      token: ""
     };
 
   constructor(private loginService: LoginService, private router: Router, private cookiesService: CookiesService) {}
@@ -21,15 +21,15 @@ export class LoginComponent {
 
 
     login() {
-      if (this.cookiesService.isLoginable()) {
+      /*if (this.cookiesService.isLoginable()) {
         alert("Stop it, get some help")
-      } else {
+      } else { */
         this.onSubmit()
-      }
+     // }
     }
 
     onSubmit() {
-      this.loginService.login(this.loginData).subscribe(
+      this.loginService.tokenLogin(this.loginData).subscribe(
         (res) => {
           const token = res.token
 
@@ -58,6 +58,6 @@ export class LoginComponent {
     }
 
     changeLoginType() {
-      this.router.navigate(['/token'])
+      this.router.navigate(['/login'])
     }
 }

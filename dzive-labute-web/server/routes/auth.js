@@ -5,6 +5,7 @@ const Session = require('../models/session')
 const jwt = require('jsonwebtoken')
 
 const nodemailer = require('nodemailer')
+const session = require('../models/session')
 
 require('dotenv').config()
 
@@ -76,6 +77,24 @@ router.post('/login', (req, res) => {
     })
 })
 
+router.post('/tokenlogin', (req, res) => {
+    let loginData = req.body
+
+    Session.findOne({user: loginData.user}, (error, session) => {
+        if (error) {
+            console.log(error)
+        } else 
+            if (!session) {
+                res.status(401).send('Invalid user')
+            } else if ( session.token !== loginData.token ) {
+                    res.status(401).send('Invalid token')
+                } else {
+                    let token = loginData.token
+
+                    res.status(200).json({ token })
+                }
+    })
+})
 
 router.get('/glogout', (req, res) => {
     Session.deleteMany({}, (err, res) => {
