@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Subject } from 'rxjs';
+import { CookiesService } from '../cookies/cookies.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,14 @@ export class LoginService {
 
   private apiUrl = "http://localhost:3000/auth"
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService, private cookiesService: CookiesService) { }
 
   username: string = ''
 
   login(loginData: any): Observable<any> {
     const url = `${this.apiUrl}/login`
 
+    this.cookiesService.setLoginType('pass')
     this.username = loginData.username
 
     // Send the login request to the backend API
@@ -27,6 +29,8 @@ export class LoginService {
 
   tokenLogin(loginData: any): Observable<any> {
     const url = `${this.apiUrl}/tokenlogin`
+
+    this.cookiesService.setLoginType('token')
 
     return this.http.post<any>(url, loginData)
   }
@@ -49,42 +53,21 @@ export class LoginService {
     }
   }
 
-  setAuthState(): void {
-    let authState: string = ''
-    if (this.getAuthTokenBool() == true) {
-      authState = 'true'
-      this.cookieService.set('authState', authState)
-    } else {
-      authState = 'false'
-      this.cookieService.set('authState', authState)
-    }
-  }
-
-  getAuthState(): boolean {
-    const stateCheck = this.cookieService.check('authState')
-    let state: boolean
-    if (stateCheck == true) {
-      state = true
-      return state
-    } else {
-      state = false
-      return state
-    }
-  }
 
   // Modified method to include JWT in the Authorization header
   private getHeaders(): HttpHeaders {
     const token = this.getAuthToken();
+    const loginType = this.cookiesService.getLoginType()
     return new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': ` ${token}`,
+      'Login-Type': ` ${loginType}`
     });
   }
 
   isAuthenticatedUser(): boolean {
     const url = `${this.apiUrl}/check`
     const headers = this.getHeaders()
-    this.getAuthState()
     this.http.get(url, { headers }).subscribe(
       response => {
         console.log(response)
@@ -113,7 +96,6 @@ export class LoginService {
     this.http.get(url, { headers }).subscribe(response => {
       console.log(response)
     })
-    this.setAuthState()
   }
 
   checkAuth(): void {

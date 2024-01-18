@@ -135,7 +135,11 @@ router.get('/check', verifyToken, (req, res) => {
 
 router.get('/logout', (req, res) => {
     const token = req.headers['authorization']
+    const loginType = req.headers['login-type']
 
+    if (loginType == 'token') {
+        res.status(200).json({ message: 'Logged out, keeping session' })
+    } else if (loginType == 'pass') {
     Session.deleteOne({token}, (error, res) => {
         if (error) {
             console.log(error)
@@ -143,7 +147,12 @@ router.get('/logout', (req, res) => {
             console.log(res)
         }
     })
-    res.status(200).json({ message: 'Logged out' })
+        res.status(200).json({ message: 'Logged out' })
+    } else {
+        res.status(500).json({ message: 'Invalid login type' })
+    }
+
+
 })
 
 module.exports = router

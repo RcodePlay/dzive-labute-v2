@@ -56,6 +56,7 @@ export class ArticlesComponent implements OnInit{
         this.selectedArticle._id = article._id
         this.selectedArticle.title = article.title
         this.selectedArticle.content = article.content
+        this.selectedArticle.author = article.author
       }, 
       error: (error) => {
         console.error(error)

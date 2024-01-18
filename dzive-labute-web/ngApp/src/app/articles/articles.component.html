@@ -1,18 +1,18 @@
-<h2>Články</h2>
+<h2>Info</h2>
 <div *ngFor="let article of articles" class="article">
     <h2>{{article.title}}</h2>
     <h3>{{article.content}}</h3>
-    <h5>Napísal: {{article.author}}</h5><br>
+    <h5>Autor: {{article.author}}</h5><br>
     <button *ngIf="isloggedIn" (click)="deleteArticle(article._id)" class="button-35">Delete</button><br>
 
 
     <br><button *ngIf="isloggedIn" (click)="editArticle(article._id)" class="button-35">Edit</button>
     <form *ngIf="editing" (ngSubmit)="updateArticle()"><br>
-        <label>Názov: 
+        <label>Názov: <br>
             <input [(ngModel)]="selectedArticle.title" name="title" placeholder="Názov" class="input">
         </label><br>
 
-        <label>Text: 
+        <label>Text: <br>
             <textarea [(ngModel)]="selectedArticle.content" name="content" class="textarea"></textarea>
         </label><br>
 

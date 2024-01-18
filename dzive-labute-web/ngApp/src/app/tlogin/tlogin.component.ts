@@ -21,11 +21,11 @@ export class TloginComponent {
 
 
     login() {
-      /*if (this.cookiesService.isLoginable()) {
+      if (this.cookiesService.isLoginable()) {
         alert("Stop it, get some help")
-      } else { */
+      } else { 
         this.onSubmit()
-     // }
+      }
     }
 
     onSubmit() {
@@ -34,7 +34,6 @@ export class TloginComponent {
           const token = res.token
 
           this.loginService.setAuthToken(token)
-          this.loginService.setAuthState()
           this.router.navigate(['/admin']).then(success => {
             if (!success) {
               console.error('Navigation failed')
@@ -53,6 +52,8 @@ export class TloginComponent {
           }
 
           console.log(this.loginAttemptCount)
+
+          this.cookiesService.setLoginType('token')
         }
       )
     }
