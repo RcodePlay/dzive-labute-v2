@@ -27,7 +27,7 @@ export class SubpageContentComponent {
 
   getArticle() {
     this.articleService.getArticles().subscribe((articles) => {
-      this.articles = articles
+      this.articles = articles.slice(0, 3)
     })
   }
 

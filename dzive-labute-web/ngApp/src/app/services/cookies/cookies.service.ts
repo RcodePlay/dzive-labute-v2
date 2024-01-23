@@ -24,11 +24,4 @@ export class CookiesService {
     return this.cookieService.get('loginable') === 'false'
   }
 
-  setLoginType(value: string) {
-    this.cookieService.set('logintype', value, 1)
-  }
-
-  getLoginType(): string {
-    return this.cookieService.get('logintype')
-  }
 }

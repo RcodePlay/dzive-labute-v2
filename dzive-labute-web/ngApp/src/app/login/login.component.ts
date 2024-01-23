@@ -53,7 +53,6 @@ export class LoginComponent {
 
           console.log(this.loginAttemptCount)
 
-          this.cookiesService.setLoginType('pass')
         }
       )
     }

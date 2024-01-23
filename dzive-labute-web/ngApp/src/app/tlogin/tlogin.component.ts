@@ -53,7 +53,6 @@ export class TloginComponent {
 
           console.log(this.loginAttemptCount)
 
-          this.cookiesService.setLoginType('token')
         }
       )
     }

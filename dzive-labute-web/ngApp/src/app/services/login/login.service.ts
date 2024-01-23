@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Subject } from 'rxjs';
-import { CookiesService } from '../cookies/cookies.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +11,13 @@ export class LoginService {
 
   private apiUrl = "http://localhost:3000/auth"
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private cookiesService: CookiesService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   username: string = ''
 
   login(loginData: any): Observable<any> {
     const url = `${this.apiUrl}/login`
 
-    this.cookiesService.setLoginType('pass')
     this.username = loginData.username
 
     // Send the login request to the backend API
@@ -30,7 +28,6 @@ export class LoginService {
   tokenLogin(loginData: any): Observable<any> {
     const url = `${this.apiUrl}/tokenlogin`
 
-    this.cookiesService.setLoginType('token')
 
     return this.http.post<any>(url, loginData)
   }
@@ -57,11 +54,9 @@ export class LoginService {
   // Modified method to include JWT in the Authorization header
   private getHeaders(): HttpHeaders {
     const token = this.getAuthToken();
-    const loginType = this.cookiesService.getLoginType()
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': ` ${token}`,
-      'Login-Type': ` ${loginType}`
+      'Authorization': ` ${token}`
     });
   }
 
@@ -80,6 +75,8 @@ export class LoginService {
   logout(): void {
     const url = `${this.apiUrl}/logout`
     const headers = this.getHeaders()
+    this.clearAuthToken()
+    
     this.http.get(url, { headers }).subscribe(
       res => {
         console.log(res)
@@ -87,6 +84,7 @@ export class LoginService {
         console.log(error)
       }
     )
+    this.notifyLogout()
   }
 
   globalLogout(): void {
@@ -127,6 +125,10 @@ export class LoginService {
 
     getUsername() {
       return this.username
+    }
+
+    clearAuthToken() {
+      this.cookieService.delete('authToken')
     }
 }    
 
