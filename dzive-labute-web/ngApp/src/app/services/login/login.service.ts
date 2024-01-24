@@ -42,15 +42,6 @@ export class LoginService {
     return this.cookieService.get('authToken') 
   }
 
-  getAuthTokenBool(): boolean {
-    if (this.getAuthToken() == this.authToken) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-
   // Modified method to include JWT in the Authorization header
   private getHeaders(): HttpHeaders {
     const token = this.getAuthToken();
@@ -60,6 +51,7 @@ export class LoginService {
     });
   }
 
+
   isAuthenticatedUser(): boolean {
     const url = `${this.apiUrl}/check`
     const headers = this.getHeaders()
@@ -67,6 +59,7 @@ export class LoginService {
       response => {
         console.log(response)
       }, (error) => {
+        this.clearAuthToken()
         console.error(error)
       })
       return this.cookieService.check('authToken')
@@ -86,35 +79,6 @@ export class LoginService {
     )
     this.notifyLogout()
   }
-
-  globalLogout(): void {
-    this.checkAuth()
-    const url = `${this.apiUrl}/glogout`
-    const headers = this.getHeaders()
-    this.http.get(url, { headers }).subscribe(response => {
-      console.log(response)
-    })
-  }
-
-  checkAuth(): void {
-    const url = `${this.apiUrl}/check`
-    const headers = this.getHeaders()
-    this.http.get(url, { headers }).subscribe(
-      response => {
-        console.log(response)
-    }, (error) => {
-      console.error(error)
-    })
-  }
-
-    // Modified method to include headers in the request
-    getProtectedData(): Observable<any> {
-      const url = `${this.apiUrl}/protected-data`;
-      const headers = this.getHeaders();
-  
-      return this.http.get(url, { headers });
-    }
-    
 
     private logoutSubject = new Subject<void>();
     logoutObservable = this.logoutSubject.asObservable()

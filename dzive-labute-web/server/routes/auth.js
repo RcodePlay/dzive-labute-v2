@@ -54,26 +54,26 @@ router.post('/login', (req, res) => {
                     })
 
                     res.status(200).json({ token })
+
+                    const loginTime = new Date();
+                    const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+                
+                    let mailOptions = {
+                        from: process.env.MAIL_SENDER,
+                        to: process.env.MAIL_RECIEVER,
+                        subject: 'User Login at Dzive Labute',
+                        text: `User "${userData.username}" logged in at ${loginTime} from IP address ${ipAddress}`
+                    };
+                
+                    transporter.sendMail(mailOptions, (error, info) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log('Email sent: ' + info.response);
+                        }
+                    })
+
                 }
-            
-        
-    })
-    const loginTime = new Date();
-    const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-
-    let mailOptions = {
-        from: process.env.MAIL_SENDER,
-        to: process.env.MAIL_RECIEVER,
-        subject: 'User Login at Dzive Labute',
-        text: `User "${userData.username}" logged in at ${loginTime} from IP address ${ipAddress}`
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
     })
 })
 
@@ -107,39 +107,44 @@ router.get('/glogout', (req, res) => {
     res.status(200).json({ message: 'Logged out' })
 })
 
-
+let have = false
 
 function verifyToken(req, res, next) {
     // Get the token from the request headers
     const token = req.headers['authorization'];
-    console.log(req.headers)
   
-    // Check if token exists
+
+    // Check if we recieved a token
     if (!token) {
       return res.status(403).send({ message: 'No token provided.' });
+      have = false
     }
   
     Session.findOne({token: token}, (err, session) => {
         if (err) {
             console.log(err)
-        } else {
+        } else if (session) {
             console.log("Checked user session")
+            have = true
+        } else {
+            console.log("Session not found")
+            have = false
         }
     })
 }
 
 router.get('/check', verifyToken, (req, res) => {
     const headers = req.headers['']
-    res.status(200).send({ message: 'Checking Authentication', headers: headers })
+
+    if (have == false) {
+        res.status(403).json({ message: 'Session not found' })
+    } else if (have == true) {
+        res.status(200).json({ message: 'Authentication approved', headers: headers })
+    }
 })
 
 router.get('/logout', (req, res) => {
     const token = req.headers['authorization']
-    const loginType = req.headers['login-type']
-
-    if (loginType == 'token') {
-        res.status(200).json({ message: 'Logged out, keeping session' })
-    } else if (loginType == 'pass') {
     Session.deleteOne({token}, (error, res) => {
         if (error) {
             console.log(error)
@@ -147,12 +152,7 @@ router.get('/logout', (req, res) => {
             console.log(res)
         }
     })
-        res.status(200).json({ message: 'Logged out' })
-    } else {
-        res.status(500).json({ message: 'Invalid login type' })
-    }
-
-
+    res.status(200).json({ message: 'Logged out' })
 })
 
 module.exports = router

@@ -2,7 +2,7 @@
     <div class="admin-interface">
         <h2>Welcome {{username}}!</h2>
         <div class="newArticle">
-            <h3>Nový článok:</h3>
+            <h3>Nová udalosť:</h3>
             <label>Autor: <br>
             <input [(ngModel)]="article.author" placeholder="Autor" class="input" type="text" id="author"><br>
             </label><br>
@@ -14,7 +14,7 @@
             <label>Text: <br>
             <textarea [(ngModel)]="article.content" class="textarea" id="content"></textarea><br>
             </label><br>
-            <button (click)="createArticle()" class="button-28">Vytvoriť článok</button><br>
+            <button (click)="createArticle()" class="button-28">Vytvoriť udalosť</button><br>
 
             <br><button (click)="onLogout()" class="button-28">Logout</button>
         </div><br>

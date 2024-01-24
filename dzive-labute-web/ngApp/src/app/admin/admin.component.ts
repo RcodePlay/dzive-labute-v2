@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit():void {
-    this.loginService.checkAuth()
+    this.loginService.isAuthenticatedUser()
   }
 
 
