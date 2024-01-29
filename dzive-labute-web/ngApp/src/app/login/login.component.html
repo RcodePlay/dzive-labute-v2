@@ -1,23 +1,21 @@
 <div class="login-form">
-    <h1 class="sitetitle">Prihlásenie</h1>
-    <div class="form">
-        <div class="inner-form">
+    <h1 class="sitetitle animate__animated animate__zoomIn">Prihlásenie</h1>
+    <div class="inner-content">
         <form (ngSubmit)="login()">
 
             <div class="username">
-                <label>Username <br>
-                <input [(ngModel)]="loginData.username" name="username" type="text" autocomplete="username">
+                <label>Meno <br>
+                <input [(ngModel)]="loginData.username" name="username" type="text" autocomplete="username" class="input" placeholder="meno">
                 <br></label><br>
             </div>
 
             <div class="lmethod">
-                <label>Password<br>
-                <input [(ngModel)]="loginData.password" name="password" type="password" autocomplete="current-password"><br>
+                <label>Heslo <br>
+                <input [(ngModel)]="loginData.password" name="password" type="password" autocomplete="current-password" class="input" placeholder="heslo"><br>
                 </label><br>
             </div>
                 <button type="submit" class="button-28">Login</button>
         </form>
-    </div>
     </div>
     <button (click)="this.changeLoginType()" class="button-28">Change login type</button><br><br>
 </div>
