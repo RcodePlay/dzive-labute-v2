@@ -8,6 +8,14 @@ h6 {
   font-weight: 650;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
 
 .div {
     display: flex;
