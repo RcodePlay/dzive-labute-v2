@@ -6,9 +6,9 @@ const jwt = require('jsonwebtoken')
 
 const nodemailer = require('nodemailer')
 const session = require('../models/session')
+const checkTime = new Date()
 
 require('dotenv').config()
-
 
 
 let transporter = nodemailer.createTransport({
@@ -111,8 +111,7 @@ let have = false
 
 function verifyToken(req, res, next) {
     // Get the token from the request headers
-    const token = req.headers['authorization'];
-  
+    const token = req.headers['authorization'];  
 
     // Check if we recieved a token
     if (!token) {
@@ -122,12 +121,12 @@ function verifyToken(req, res, next) {
   
     Session.findOne({token: token}, (err, session) => {
         if (err) {
-            console.log(err)
+            console.log(checktTime, " >> ", err)
         } else if (session) {
-            console.log("Checked user session")
+            console.log(checkTime, ' >> Checked user session')
             have = true
         } else {
-            console.log("Session not found")
+            console.log(checkTime, " >> Session not found")
             have = false
         }
     })

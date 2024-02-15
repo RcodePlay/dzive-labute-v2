@@ -85,10 +85,11 @@
     align-items: center;
     line-height: 20px;
     width: 98%;
-    height: 75px;
-    position: absolute;
+    height: 45px;
+    position: fixed;
     bottom: 0;
     left: 0;
+    z-index: 10;
   }
 
   footer a {
