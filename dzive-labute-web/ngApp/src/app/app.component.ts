@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   showCookieMessage = false;
 
-  title = 'ngApp';
+  title = '4. zbor Dzivé Labute';
   isLoggedIn = false
 
   ngOnInit() {
