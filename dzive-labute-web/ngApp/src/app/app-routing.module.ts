@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: SubpageContentComponent},
   {path: 'contact', component: SubpageContentComponent},
-  {path: 'articles', component: ArticlesComponent},
+  {path: 'udalosti', component: ArticlesComponent},
   {path: 'login', component: LoginComponent},
 
   {path: 'admin', component: AdminComponent, canActivate: [() => {

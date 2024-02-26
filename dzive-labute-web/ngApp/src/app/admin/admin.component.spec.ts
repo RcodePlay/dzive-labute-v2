@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminComponent } from './admin.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 describe('AdminComponent', () => {
   let component: AdminComponent;
@@ -8,6 +10,7 @@ describe('AdminComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientModule, FormsModule],
       declarations: [AdminComponent]
     });
     fixture = TestBed.createComponent(AdminComponent);

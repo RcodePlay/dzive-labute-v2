@@ -3,15 +3,11 @@
 <div class="admin-interface">
         <div class="newArticle">
             <h3>Nová udalosť:</h3>
-            <label>Autor: <br>
-            <input [(ngModel)]="article.author" placeholder="Autor" class="input" type="text" id="author"><br>
-            </label><br>
-
             <label>Názov: <br>
             <input [(ngModel)]="article.title" placeholder="Názov" class="input" type="text" id="name"><br>
             </label><br>
             
-            <label>Text: <br>
+            <label>Obsah: <br>
             <textarea [(ngModel)]="article.content" class="textarea" id="content"></textarea><br>
             </label><br>
             <button (click)="createArticle()" class="button-28">Vytvoriť udalosť</button><br>

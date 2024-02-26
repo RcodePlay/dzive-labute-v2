@@ -29,7 +29,7 @@ router.get('/', (req, res) => {
 //route for fetching all articles
 router.get('/articles', async (req, res) => {
     try {
-        const articles = await Article.find().populate('author')
+        const articles = await Article.find().populate('title')
         res.json(articles)
     } catch (err) {
         res.status(500).send(err)
@@ -57,16 +57,15 @@ router.get('/articles/:id', async (req, res) => {
 //route for writing a new article
 router.post('/newarticle', async (req, res) => {
     try {
-        const {title, content, author} = req.body
+        const {title, content} = req.body
 
-        if (!title || !content || !author ) {
-            return res.status(400).json({ error: 'Title, content and autohr are required fields'})
+        if (!title || !content ) {
+            return res.status(400).json({ error: 'Title and content are required fields'})
         }
 
         const article = new Article({
             title,
             content,
-            author
         })
 
         const savedArticle = await article.save()
@@ -102,9 +101,9 @@ router.delete('/articles/:id', async (req, res) => {
 router.put('/edit/:id', async (req, res) => {
     try {
         const { id } = req.params
-        const { title, content, author } = req.body
+        const { title, content } = req.body
 
-        const updatedArticle = await Article.findByIdAndUpdate(id, { title, content, author}, { new: true})
+        const updatedArticle = await Article.findByIdAndUpdate(id, { title, content}, { new: true})
 
         if (!updatedArticle) {
             return res.status(404).json({ message: 'Article not found' })

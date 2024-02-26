@@ -7,7 +7,7 @@
         <div class="last-actions">    
             <div *ngFor="let article of articles">
                 <h2 class="title">{{article.title}}</h2>
-                <h3 class="content">{{article.content}}</h3><br>
+                <h3 class="content">{{article.content}}</h3><hr>
             </div>
         </div>
 
@@ -15,12 +15,12 @@
 </div>
 
 <div *ngIf="isContact">
-    <h1 class="sitetitle animate__animated animate__zoomIn">Kontakt</h1>
+    <h1 class="sitetitle animate__animated animate__zoomIn">Kontaktujte nás</h1>
     <div class="inner-content">
         <h2><strong>Space for contact info. Yes.</strong></h2>
         <hr>
         <div class="help">
-            <h3> Ak máte problémy alebo otázky týkajúce sa vývojára / webstránky, kontaktujte ma:</h3>
+            <h3> Ak máte problémy alebo otázky týkajúce sa vývojára alebo webstránky, kontaktujte ma:</h3>
             <h4>Email: ryancode.eh&#64;gmail.com</h4>
     </div>
 </div>

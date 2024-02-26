@@ -33,7 +33,7 @@ export class ArticlesService {
     _id: '',
     title: '',
     content: '',
-    author: ''
+    // author: ''
   }
 
   getArticle(id: string): Observable<Article> {
@@ -50,5 +50,4 @@ export interface Article {
   _id: string
   title: string
   content: string
-  author: string
 }

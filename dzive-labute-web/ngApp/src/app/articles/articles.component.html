@@ -2,7 +2,7 @@
 <div *ngFor="let article of articles" class="article">
     <h2>{{article.title}}</h2>
     <h3>{{article.content}}</h3>
-    <h5>Autor: {{article.author}}</h5><br>
+    <!-- <h5>Autor: {{article.author}}</h5><br> -->
     <button *ngIf="isloggedIn" (click)="deleteArticle(article._id)" class="button-35">Delete</button><br>
 
 

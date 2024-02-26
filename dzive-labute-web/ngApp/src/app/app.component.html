@@ -14,7 +14,7 @@
       <nav> 
         <ul>
           <li><a routerLink="/home"><button class="button-35">Domov</button></a></li>
-          <li><a routerLink="/articles"><button class="button-35">Udalosti</button></a></li>
+          <li><a routerLink="/udalosti"><button class="button-35">Udalosti</button></a></li>
           <li><a routerLink="/contact"><button class="button-35">Kontakt</button></a></li>
           <li><a [routerLink]="isLoggedIn ? '/admin' : '/login'"><button class="button-35">{{isLoggedIn ? 'Admin' : 'Prihlásenie'}}</button></a></li>
         </ul>
@@ -40,7 +40,7 @@
     <button (click)="acceptCookies()">I Understand</button>
   </div>
   <div class="spacer"></div>
-</div>
+
 
 
 
@@ -66,3 +66,4 @@
   </a>
  </footer>
 
+</div>

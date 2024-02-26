@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
 import { Router } from '@angular/router'
 import { CookiesService } from '../services/cookies/cookies.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent {
       password: ""
     };
 
-  constructor(private loginService: LoginService, private router: Router, private cookiesService: CookiesService) {}
+  constructor(private loginService: LoginService, private router: Router, 
+    private cookiesService: CookiesService, private formsModule: FormsModule) {}
     
     loginAttemptCount = 0
 

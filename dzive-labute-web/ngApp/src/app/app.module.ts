@@ -7,7 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { ArticlesComponent } from './articles/articles.component';
 import { AdminComponent } from './admin/admin.component';
 import { SubpageContentComponent } from './subpage-content/subpage-content.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { Error404Component } from './error404/error404.component';
 import { TloginComponent } from './tlogin/tlogin.component';
 
@@ -25,9 +26,10 @@ import { TloginComponent } from './tlogin/tlogin.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RouterModule
   ],
-  providers: [],
+  providers: [ HttpClientModule, HttpClient ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

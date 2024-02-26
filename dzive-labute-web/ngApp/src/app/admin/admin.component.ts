@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../services/login/login.service';
 import { ArticlesService } from '../services/articles/articles.service';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
@@ -14,7 +15,7 @@ export class AdminComponent implements OnInit {
   username: string = ''
 
   constructor(private loginService: LoginService, private router: Router,
-     private articleService: ArticlesService) {}
+     private articleService: ArticlesService, private formsModule: FormsModule) {}
 
 
   onLogout() {
@@ -32,7 +33,6 @@ export class AdminComponent implements OnInit {
   article = {
     title: '',
     content: '',
-    author: ''
   }
 
   createArticle() {
@@ -41,7 +41,7 @@ export class AdminComponent implements OnInit {
     
     this.articleService.createArticle(this.article).subscribe((response) => {
       console.log(response)
-      alert("Článok vytvorený!")
+      alert("Udalosť vytvorená!")
     })
   }
   }
