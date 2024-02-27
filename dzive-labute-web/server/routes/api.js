@@ -28,12 +28,13 @@ router.get('/', (req, res) => {
 
 //route for fetching all articles
 router.get('/articles', async (req, res) => {
-    try {
-        const articles = await Article.find().populate('title')
-        res.json(articles)
-    } catch (err) {
-        res.status(500).send(err)
-    }
+        const articles = Article.find().sort({num: -1}).exec((err, articles) => {
+            if (err) {
+                res.status(500).json({ message: err })
+            } else {
+                res.json(articles)
+            }
+        })
 })
 
 //route for fetching articles by ID
@@ -56,23 +57,31 @@ router.get('/articles/:id', async (req, res) => {
 
 //route for writing a new article
 router.post('/newarticle', async (req, res) => {
-    try {
-        const {title, content} = req.body
-
-        if (!title || !content ) {
+    const {title, content} = req.body
+    if (!title || !content ) {
             return res.status(400).json({ error: 'Title and content are required fields'})
         }
 
+    Article.findOne().sort({'num': -1}).exec(async (err, latestArticle) => {
+        if (err) {
+            res.send(err)
+        } else {
+            let latestSerialNumber = latestArticle.num
+            console.log(latestArticle.num)
+            let newSerialNumber = latestSerialNumber + 1
+            console.log(newSerialNumber)
+            
+
         const article = new Article({
-            title,
-            content,
+            title: req.body.title,
+            content: req.body.content,
+            num: newSerialNumber
         })
 
         const savedArticle = await article.save()
         res.status(201).json(savedArticle)
-    } catch (err) {
-        res.status(500).json({ error: err.message })
-    }
+        }
+    })     
 })
 
 //route for removing articles by ObjectID
@@ -101,9 +110,9 @@ router.delete('/articles/:id', async (req, res) => {
 router.put('/edit/:id', async (req, res) => {
     try {
         const { id } = req.params
-        const { title, content } = req.body
+        const { title, content, num } = req.body
 
-        const updatedArticle = await Article.findByIdAndUpdate(id, { title, content}, { new: true})
+        const updatedArticle = await Article.findByIdAndUpdate(id, { title, content, num}, { new: true})
 
         if (!updatedArticle) {
             return res.status(404).json({ message: 'Article not found' })

@@ -20,11 +20,4 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app.title).toEqual('4. zbor Dzivé Labute');
   });
-
-  it('should work', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(1+1).toEqual(2);
-  });
 });

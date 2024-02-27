@@ -15,7 +15,7 @@ export class ArticlesService {
 
   getArticles(): Observable<any> {
     const url = `${this.apiUrl}/api/articles`
-    //send the articles get request to he backend
+    //send the articles get request to the articles API
     return this.http.get(url)
   }
 
@@ -33,7 +33,7 @@ export class ArticlesService {
     _id: '',
     title: '',
     content: '',
-    // author: ''
+    num: 0
   }
 
   getArticle(id: string): Observable<Article> {
@@ -50,4 +50,5 @@ export interface Article {
   _id: string
   title: string
   content: string
+  num: number
 }

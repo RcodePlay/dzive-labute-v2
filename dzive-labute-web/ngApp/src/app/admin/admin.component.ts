@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class AdminComponent implements OnInit {
 
   username: string = ''
+  articles: any
 
   constructor(private loginService: LoginService, private router: Router,
      private articleService: ArticlesService, private formsModule: FormsModule) {}
@@ -26,23 +27,26 @@ export class AdminComponent implements OnInit {
 
   ngOnInit():void {
     this.loginService.isAuthenticatedUser()
+    this.lastArticles()
   }
-
 
 
   article = {
     title: '',
     content: '',
+    num: ''
   }
 
   createArticle() {
-    if (this.loginService.isAuthenticatedUser()) {
-
-    
     this.articleService.createArticle(this.article).subscribe((response) => {
       console.log(response)
       alert("Udalosť vytvorená!")
     })
   }
+
+  lastArticles(): void {
+    this.articleService.getArticles().subscribe((articles) => {
+      this.articles = articles.slice(0, 2)
+    })
   }
 }

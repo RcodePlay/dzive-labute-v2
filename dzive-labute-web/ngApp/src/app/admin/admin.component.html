@@ -1,6 +1,6 @@
 <h1 class="sitetitle animate__animated animate__zoomIn">Admin</h1>
 
-<div class="admin-interface">
+<div id="admin-interface">
         <div class="newArticle">
             <h3>Nová udalosť:</h3>
             <label>Názov: <br>
@@ -12,6 +12,20 @@
             </label><br>
             <button (click)="createArticle()" class="button-28">Vytvoriť udalosť</button><br>
 
+            
+        </div>
+        
+        <div class="dashboard">
+            <h3>Nástenka</h3>
             <br><button (click)="onLogout()" class="button-28">Logout</button>
+        </div>
+
+        <div class="events">
+            <h3>Posledné udalosti:</h3>
+            <div class="last-event" *ngFor="let article of articles">
+                <h2>{{article.title}}</h2>
+                <h3>{{article.content}}</h3>
+            </div>
+
         </div>
     </div><br>

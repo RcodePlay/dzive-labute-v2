@@ -18,7 +18,7 @@ export class ArticlesComponent implements OnInit{
     _id: '',
     title: '',
     content: '',
-    // author: ''
+    num: 0
   }
 
   articles: any
@@ -56,7 +56,7 @@ export class ArticlesComponent implements OnInit{
         this.selectedArticle._id = article._id
         this.selectedArticle.title = article.title
         this.selectedArticle.content = article.content
-        // this.selectedArticle.author = article.author
+        this.selectedArticle.num = article.num
       }, 
       error: (error) => {
         console.error(error)

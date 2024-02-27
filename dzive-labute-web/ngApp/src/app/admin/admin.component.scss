@@ -1,8 +1,39 @@
-.admin-interface {
+#admin-interface {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+#admin-interface div {
+    align-items: center;
     margin: 10px;
     padding: 15px;
+    width: 100%;
+}
+
+.newArticle {
     align-content: center;
     background-color: #ffea00;
     border-radius: 20px;
-    width: auto;
+}
+
+.dashboard {
+    align-content: center;
+    background-color: #ffea00;
+    border-radius: 20px;
+}
+
+.events {
+    align-items: center;
+    background-color: #ffea00;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.last-event {
+    background-color: #f7f7f7;
+    border: 4px solid #1cb9e6;
+    border-radius: 15px;
+    max-width: fit-content;
+    min-width: 215px;
 }

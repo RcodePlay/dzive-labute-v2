@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 const articleSchema = new Schema({
     title: String,
     content: String,
-    author: String
+    num: Number
 })
 
 module.exports = mongoose.model('article', articleSchema, 'articles')
