@@ -49,7 +49,7 @@ router.post('/login', (req, res) => {
                         if (error) {
                             console.log(error)
                         } else {
-                            console.log("success")
+                            console.log(checkTime, " >> success")
                         }
                     })
 
@@ -69,7 +69,7 @@ router.post('/login', (req, res) => {
                         if (error) {
                             console.log(error);
                         } else {
-                            console.log('Email sent: ' + info.response);
+                            console.log(checkTime, ' >> Email sent: ' + info.response);
                         }
                     })
 
@@ -107,16 +107,16 @@ router.get('/glogout', (req, res) => {
     res.status(200).json({ message: 'Logged out' })
 })
 
-let have = false
+let legitToken = false
 
 function verifyToken(req, res, next) {
     // Get the token from the request headers
-    const token = req.headers['authorization'];  
+    const token = req.headers['Authorization'];  
 
     // Check if we recieved a token
     if (!token) {
-      return res.status(403).send({ message: 'No token provided.' });
-      have = false
+        legitToken = false
+        return res.status(403).send({ message: 'No token provided.' });
     }
   
     Session.findOne({token: token}, (err, session) => {
@@ -124,10 +124,10 @@ function verifyToken(req, res, next) {
             console.log(checktTime, " >> ", err)
         } else if (session) {
             console.log(checkTime, ' >> Checked user session')
-            have = true
+            legitToken = true
         } else {
             console.log(checkTime, " >> Session not found")
-            have = false
+            legitToken = false
         }
     })
 }
@@ -135,11 +135,38 @@ function verifyToken(req, res, next) {
 router.get('/check', verifyToken, (req, res) => {
     const headers = req.headers['']
 
-    if (have == false) {
+    if (legitToken == false) {
         res.status(403).json({ message: 'Session not found' })
-    } else if (have == true) {
+    } else if (legitToken == true) {
         res.status(200).json({ message: 'Authentication approved', headers: headers })
     }
+})
+
+router.get('/auth', (req, res) => {
+    const token = req.headers['Authorization']
+
+    if (!token) {
+        legitToken = false
+        return res.status(400).json({ message: 'No token provided'})
+    }
+
+    Session.findOne({token: token}, (err, foundSession) => {
+        if (err) {
+            console.log(checkTime, " >> ", err)
+            legitToken = false
+            res.status(500).json({ message: 'Session not found'})
+        } else if (session) {
+            legitToken = true
+            console.log(checkTime, " >> Found user session")
+            res.status(200).json({ message: 'Found user session'})
+        } else {
+            legitToken = false
+            console.log(checkTime, " >> Session not found")
+            res.status(404).json({ message: 'Session not found'})
+        }
+    })
+
+
 })
 
 router.get('/logout', (req, res) => {

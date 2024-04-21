@@ -51,19 +51,27 @@ export class LoginService {
     });
   }
 
+  private isAuthorized = true
 
   isAuthenticatedUser(): boolean {
+    return this.isAuthorized
+  }
+
+/*  isAuthenticatedUser(): boolean {
     const url = `${this.apiUrl}/check`
     const headers = this.getHeaders()
     this.http.get(url, { headers }).subscribe(
       response => {
         console.log(response)
+        this.isAuthorized = true
       }, (error) => {
         this.clearAuthToken()
         console.error(error)
+        this.isAuthorized = false
       })
-      return this.cookieService.check('authToken')
-  }
+      // return this.cookieService.check('authToken')
+      return this.isAuthorized
+  } */
 
   logout(): void {
     const url = `${this.apiUrl}/logout`
