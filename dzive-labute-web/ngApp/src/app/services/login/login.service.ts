@@ -47,13 +47,27 @@ export class LoginService {
     const token = this.getAuthToken();
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': ` ${token}`
+      'Accepts': 'application/json',
+      'Authorization': `Bearer ${token}`
     });
   }
 
-  private isAuthorized = true
+  private isAuthorized = false
 
   isAuthenticatedUser(): boolean {
+    const url = `${this.apiUrl}/auth`
+    const headers = this.getHeaders()
+    
+    this.http.get(url, { headers }).subscribe(
+      res => {
+        console.log(res)
+        this.isAuthorized = true
+      }, (error) => {
+        console.log(error)
+        this.isAuthorized = false
+      }
+    )
+
     return this.isAuthorized
   }
 
