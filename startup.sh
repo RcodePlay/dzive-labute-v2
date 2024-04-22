@@ -1,2 +1,3 @@
 cd dzive-labute-web/ngApp
-ng serve
+xterm -e ng serve & 
+xterm -e cd ../ & ls & node server

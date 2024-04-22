@@ -99,9 +99,9 @@ router.post('/tokenlogin', (req, res) => {
 router.get('/glogout', (req, res) => {
     Session.deleteMany({}, (err, res) => {
         if (err) {
-            console.log(err)
+            console.log(currentTime, " >>", err)
         } else {
-            console.log(res)
+            console.log(currentTime ," >>",res)
         }
     })
     res.status(200).json({ message: 'Logged out' })
@@ -116,7 +116,7 @@ function verifyToken(req, res, next) {
     // Check if we recieved a token
     if (!token) {
         legitToken = false
-        return res.status(400).send({ message: 'No token provided.' });
+        return res.status(418).send({ message: 'No token provided.' });
     }
   
     Session.findOne({token: token}, (err, session) => {
@@ -142,11 +142,11 @@ router.get('/check', verifyToken, (req, res) => {
     }
 })
 
-router.get('/auth', verifyToken, (req, res) => {
+router.get('/isa', verifyToken, (req, res) => {
     const headers = req.headers['']
     
     if (legitToken == false) {
-        res.status(400).json({ message: 'Session not found'})
+        res.status(418).json({ message: 'Session not found'})
     } else if (legitToken == true) {
         res.status(200).json({ message: 'Authentication approved', headers: headers})
     }

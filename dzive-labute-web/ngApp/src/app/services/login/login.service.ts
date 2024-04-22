@@ -17,30 +17,18 @@ export class LoginService {
 
   login(loginData: any): Observable<any> {
     const url = `${this.apiUrl}/login`
-
     this.username = loginData.username
 
-    // Send the login request to the backend API
     return this.http.post<any>(url, loginData);
-
   }
 
   tokenLogin(loginData: any): Observable<any> {
     const url = `${this.apiUrl}/tokenlogin`
 
-
     return this.http.post<any>(url, loginData)
   }
 
-  private authToken: string | null = null
-  setAuthToken(token: string): void {
-    this.cookieService.set('authToken', token)
-    this.authToken = token
-  }
 
-  getAuthToken(): string | null {
-    return this.cookieService.get('authToken') 
-  }
 
   // Modified method to include JWT in the Authorization header
   private getHeaders(): HttpHeaders {
@@ -55,7 +43,7 @@ export class LoginService {
   private isAuthorized = false
 
   isAuthenticatedUser(): boolean {
-    const url = `${this.apiUrl}/auth`
+    const url = `${this.apiUrl}/isa`
     const headers = this.getHeaders()
     
     this.http.get(url, { headers }).subscribe(
@@ -71,21 +59,6 @@ export class LoginService {
     return this.isAuthorized
   }
 
-/*  isAuthenticatedUser(): boolean {
-    const url = `${this.apiUrl}/check`
-    const headers = this.getHeaders()
-    this.http.get(url, { headers }).subscribe(
-      response => {
-        console.log(response)
-        this.isAuthorized = true
-      }, (error) => {
-        this.clearAuthToken()
-        console.error(error)
-        this.isAuthorized = false
-      })
-      // return this.cookieService.check('authToken')
-      return this.isAuthorized
-  } */
 
   logout(): void {
     const url = `${this.apiUrl}/logout`
@@ -112,6 +85,29 @@ export class LoginService {
     getUsername() {
       return this.username
     }
+
+/**### Token management ###**/
+
+    private authToken: string | null = null
+  setAuthToken(token: string): void {
+    this.cookieService.set('authToken', token)
+    this.authToken = token
+  }
+
+  hasToken(): boolean {
+    const token = this.getAuthToken()
+    if (!token) {
+      return false
+    } else {
+      return true
+    }
+  }
+
+
+  getAuthToken(): string | null {
+    return this.cookieService.get('authToken') 
+  }
+
 
     clearAuthToken() {
       this.cookieService.delete('authToken')

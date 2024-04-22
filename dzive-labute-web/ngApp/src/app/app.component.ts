@@ -15,9 +15,12 @@ export class AppComponent implements OnInit {
     private cdr: ChangeDetectorRef) {}
 
   showCookieMessage = false;
-
-  title = '4. zbor Dzivé Labute';
   isLoggedIn = false
+  isDark = false
+  
+  
+  title = '4. zbor Dzivé Labute';
+
 
   ngOnInit() {
     this.isDark = this.cookieService.get('isDark') === 'true'
@@ -27,6 +30,7 @@ export class AppComponent implements OnInit {
     this.loginService.logoutObservable.subscribe(() => {
       this.isLoggedIn = false
     })
+
     this.showCookieMessage = !this.cookiesService.getCookieConsent();
   }
 
@@ -37,14 +41,13 @@ export class AppComponent implements OnInit {
 
 
   
-  isDark = false
-
   toggleBackground() {
     this.isDark = !this.isDark
     this.cookieService.set('isDark', String(this.isDark))
     window.location.reload()
     this.updateBackground()
   }
+
 
   updateBackground() {
     const buttons = this.el.nativeElement.querySelectorAll('.button-35')

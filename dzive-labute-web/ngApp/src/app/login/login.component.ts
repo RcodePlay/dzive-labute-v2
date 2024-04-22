@@ -58,8 +58,4 @@ export class LoginComponent {
         }
       )
     }
-
-    changeLoginType() {
-      this.router.navigate(['/token'])
-    }
 }
