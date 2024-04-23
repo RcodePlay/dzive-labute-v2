@@ -5,7 +5,6 @@ const Session = require('../models/session')
 const jwt = require('jsonwebtoken')
 
 const nodemailer = require('nodemailer')
-const session = require('../models/session')
 const currentTime = new Date()
 
 require('dotenv').config()
@@ -21,8 +20,12 @@ let transporter = nodemailer.createTransport({
 
 
 router.get('/', (req, res) => {
-    res.send('Hello from Auth')
+    res.send('Auth main')
 })
+
+function logWTime(message) {
+    console.log(currentTime, " >> ", message)
+}
 
 //route for logging into the website
 router.post('/login', (req, res) => {
@@ -30,7 +33,7 @@ router.post('/login', (req, res) => {
 
     User.findOne({username: userData.username}, (error, user) => {
         if (error) {
-            console.log(error)
+            logWTime(error)
         } else 
             if (!user) {
                 res.status(401).send('Invalid user')
@@ -47,9 +50,9 @@ router.post('/login', (req, res) => {
                     let session = new Session(tokenObj)
                     session.save((error, sessionSaved) => {
                         if (error) {
-                            console.log(error)
-                        } else {
-                            console.log(currentTime, " >> success")
+                            logWTime(error)
+                        } else if (sessionSaved) {
+                            logWTime("success")
                         }
                     })
 
@@ -67,9 +70,9 @@ router.post('/login', (req, res) => {
                 
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
-                            console.log(error);
+                            logWTime(error);
                         } else {
-                            console.log(currentTime, ' >> Email sent: ' + info.response);
+                            logWTime('Email sent: ' + info.response);
                         }
                     })
 
@@ -77,31 +80,12 @@ router.post('/login', (req, res) => {
     })
 })
 
-router.post('/tokenlogin', (req, res) => {
-    let loginData = req.body
-
-    Session.findOne({user: loginData.user}, (error, session) => {
-        if (error) {
-            console.log(error)
-        } else 
-            if (!session) {
-                res.status(401).send('Invalid user')
-            } else if ( session.token !== loginData.token ) {
-                    res.status(401).send('Invalid token')
-                } else {
-                    let token = loginData.token
-
-                    res.status(200).json({ token })
-                }
-    })
-})
-
 router.get('/glogout', (req, res) => {
     Session.deleteMany({}, (err, res) => {
         if (err) {
-            console.log(currentTime, " >>", err)
+            logWTime(err)
         } else {
-            console.log(currentTime ," >>",res)
+            logWTime(res)
         }
     })
     res.status(200).json({ message: 'Logged out' })
@@ -109,57 +93,35 @@ router.get('/glogout', (req, res) => {
 
 let legitToken = false
 
-function verifyToken(req, res, next) {
-    // Get the token from the request headers
-    const token = req.headers['Authorization'];  
-
-    // Check if we recieved a token
-    if (!token) {
+router.get('/isa', (req, res) => {
+    const reqJwt = req.headers['Authorization']
+    
+    if (!reqJwt) {
         legitToken = false
-        return res.status(418).send({ message: 'No token provided.' });
+        logWTime('No token provided')
+        res.status(400).json({ error: 'No token provided'})
     }
-  
-    Session.findOne({token: token}, (err, session) => {
+
+    Session.findOne({token: reqJwt}, (err, session) => {
         if (err) {
-            console.log(checktTime, " >> ", err)
+            logWTime(err)
         } else if (session) {
-            console.log(currentTime, ' >> Checked user session')
+            logWTime('Found user session')
             legitToken = true
         } else {
-            console.log(currentTime, " >> Session not found")
+            logWTime('No session found')
             legitToken = false
         }
     })
-}
-
-router.get('/check', verifyToken, (req, res) => {
-    const headers = req.headers['']
-
-    if (legitToken == false) {
-        res.status(403).json({ message: 'Session not found' })
-    } else if (legitToken == true) {
-        res.status(200).json({ message: 'Authentication approved', headers: headers })
-    }
-})
-
-router.get('/isa', verifyToken, (req, res) => {
-    const headers = req.headers['']
-    
-    if (legitToken == false) {
-        res.status(418).json({ message: 'Session not found'})
-    } else if (legitToken == true) {
-        res.status(200).json({ message: 'Authentication approved', headers: headers})
-    }
-
     })
 
 router.get('/logout', (req, res) => {
     const token = req.headers['Authorization']
     Session.deleteOne({token}, (error, res) => {
         if (error) {
-            console.log(currentTime, error)
+            logWTime(error)
         } if (res) {
-            console.log(currentTime, res)
+            logWTime(res)
         }
     })
     res.status(200).json({ message: 'Logged out' })
