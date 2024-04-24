@@ -3,11 +3,11 @@ const router = express.Router()
 const User = require('../models/user')
 const Session = require('../models/session')
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 const nodemailer = require('nodemailer')
 const currentTime = new Date()
 
-require('dotenv').config()
 
 
 let transporter = nodemailer.createTransport({
@@ -53,10 +53,10 @@ router.post('/login', (req, res) => {
                             logWTime(error)
                         } else if (sessionSaved) {
                             logWTime("Login successful")
+                            res.status(200).json({ tokenObj })
                         }
                     })
 
-                    res.status(200).json({ token })
 
                     const loginTime = new Date();
                     const ipAddress = req.headers['x-forwarded-for'] || req.socket.remoteAddress;

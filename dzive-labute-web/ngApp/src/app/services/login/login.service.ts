@@ -22,13 +22,6 @@ export class LoginService {
     return this.http.post<any>(url, loginData);
   }
 
-  tokenLogin(loginData: any): Observable<any> {
-    const url = `${this.apiUrl}/tokenlogin`
-
-    return this.http.post<any>(url, loginData)
-  }
-
-
 
   // Modified method to include JWT in the Authorization header
   private getHeaders(): HttpHeaders {
@@ -90,7 +83,7 @@ export class LoginService {
 
     private authToken: string | null = null
   setAuthToken(token: string): void {
-    this.cookieService.set('authToken', token)
+    this.cookieService.set('authToken', token, 2)
     this.authToken = token
   }
 
