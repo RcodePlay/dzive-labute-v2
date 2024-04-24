@@ -52,7 +52,7 @@ router.post('/login', (req, res) => {
                         if (error) {
                             logWTime(error)
                         } else if (sessionSaved) {
-                            logWTime("success")
+                            logWTime("Login successful")
                         }
                     })
 
@@ -64,8 +64,8 @@ router.post('/login', (req, res) => {
                     let mailOptions = {
                         from: process.env.MAIL_SENDER,
                         to: process.env.MAIL_RECIEVER,
-                        subject: 'User Login at Dzive Labute',
-                        text: `User "${userData.username}" logged in at ${loginTime} from IP address ${ipAddress}`
+                        subject: 'User logged in to Dzive Labute admin panel',
+                        text: `User "${userData.username}" logged in at ${loginTime} from ${ipAddress}`
                     };
                 
                     transporter.sendMail(mailOptions, (error, info) => {

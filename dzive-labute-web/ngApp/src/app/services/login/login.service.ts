@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 })
 export class LoginService {
 
-  private apiUrl = "http://localhost:3000/auth"
+  private apiUrl = "http://localhost:3000/sec"
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
