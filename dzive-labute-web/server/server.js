@@ -8,7 +8,7 @@ require('dotenv').config()
 
 const app = express()
 const api = require('./routes/api')
-const auth = require('./routes/auth')
+const securityApi = require('./routes/security')
 
 app.use(cors({origin: 'http://localhost:4200'}))
 app.use(bodyParser.json())
@@ -19,7 +19,7 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/auth', auth)
+app.use('/sec', securityApi)
 app.use('/api', api)
 
 
