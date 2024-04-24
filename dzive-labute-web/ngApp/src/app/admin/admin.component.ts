@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
      private articleService: ArticlesService, private formsModule: FormsModule) {}
 
 
-  onLogout() {
+  logout() {
     this.loginService.logout()
     this.loginService.notifyLogout()
     this.router.navigate(['/login'])

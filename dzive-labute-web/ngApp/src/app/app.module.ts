@@ -10,7 +10,6 @@ import { SubpageContentComponent } from './subpage-content/subpage-content.compo
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { Error404Component } from './error404/error404.component';
-import { TloginComponent } from './tlogin/tlogin.component';
 
 @NgModule({
   declarations: [
@@ -19,8 +18,7 @@ import { TloginComponent } from './tlogin/tlogin.component';
     ArticlesComponent,
     AdminComponent,
     SubpageContentComponent,
-    Error404Component,
-    TloginComponent
+    Error404Component
   ],
   imports: [
     BrowserModule,
